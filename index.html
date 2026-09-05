@@ -1,10 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="manifest" href="manifest.json">
+
     <title>Mess Management</title>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -17,13 +21,64 @@
 
 <main>
 
-    <!-- Month -->
+    <!-- MONTH -->
     <section class="month-box">
         <label>Select Month:</label>
-        <input type="month" id="selectedMonth" onchange="updateAll()">
+        <input type="month" id="selectedMonth" onchange="changeMonth()">
     </section>
 
-    <!-- Dashboard -->
+
+    <!-- MANAGER -->
+    <section class="section manager-section">
+
+        <h2>👑 Monthly Manager</h2>
+
+        <div id="managerInfo"></div>
+
+        <div id="managerControls">
+
+            <div class="form-row">
+
+                <select id="managerSelect">
+                    <option value="">Select Manager</option>
+                </select>
+
+                <input
+                    type="password"
+                    id="managerPin"
+                    placeholder="Manager PIN"
+                >
+
+                <button onclick="setManager()">
+                    Set Manager
+                </button>
+
+            </div>
+
+        </div>
+
+        <div id="managerLogin" style="display:none;">
+
+            <div class="form-row">
+
+                <input
+                    type="password"
+                    id="loginPin"
+                    placeholder="Enter Manager PIN"
+                >
+
+                <button onclick="managerLogin()">
+                    Manager Login
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- DASHBOARD -->
     <section class="dashboard">
 
         <div class="card">
@@ -48,26 +103,37 @@
 
     </section>
 
-    <!-- Members -->
+
+    <!-- MEMBERS -->
     <section class="section">
 
         <h2>👥 Members</h2>
 
-        <div class="form-row">
-            <input type="text" id="memberName" placeholder="Member name">
-            <button onclick="addMember()">Add Member</button>
+        <div class="form-row manager-only">
+
+            <input
+                type="text"
+                id="memberName"
+                placeholder="Member name"
+            >
+
+            <button onclick="addMember()">
+                Add Member
+            </button>
+
         </div>
 
         <ul id="memberList"></ul>
 
     </section>
 
-    <!-- Daily Meal -->
+
+    <!-- DAILY MEAL -->
     <section class="section">
 
         <h2>🍚 Daily Meal</h2>
 
-        <div class="form-row">
+        <div class="form-row manager-only">
 
             <input type="date" id="mealDate">
 
@@ -76,17 +142,23 @@
             </select>
 
             <select id="mealType">
+
                 <option value="Breakfast">Breakfast</option>
                 <option value="Lunch">Lunch</option>
                 <option value="Dinner">Dinner</option>
+
             </select>
 
             <select id="mealAmount">
+
                 <option value="1">1 Meal</option>
                 <option value="0.5">0.5 Meal</option>
+
             </select>
 
-            <button onclick="addMeal()">Add Meal</button>
+            <button onclick="addMeal()">
+                Add Meal
+            </button>
 
         </div>
 
@@ -94,28 +166,35 @@
 
     </section>
 
-    <!-- Expense -->
+
+    <!-- EXPENSE -->
     <section class="section">
 
         <h2>🛒 Bazar / Expense</h2>
 
-        <div class="form-row">
+        <div class="form-row manager-only">
 
             <input type="date" id="expenseDate">
 
-            <input type="text"
-                   id="expenseDescription"
-                   placeholder="What did you buy?">
+            <input
+                type="text"
+                id="expenseDescription"
+                placeholder="What did you buy?"
+            >
 
-            <input type="number"
-                   id="expenseAmount"
-                   placeholder="Amount">
+            <input
+                type="number"
+                id="expenseAmount"
+                placeholder="Amount"
+            >
 
             <select id="expensePayer">
                 <option value="">Who paid?</option>
             </select>
 
-            <button onclick="addExpense()">Add Expense</button>
+            <button onclick="addExpense()">
+                Add Expense
+            </button>
 
         </div>
 
@@ -123,22 +202,27 @@
 
     </section>
 
-    <!-- Payment -->
+
+    <!-- PAYMENT -->
     <section class="section">
 
         <h2>💰 Member Payment</h2>
 
-        <div class="form-row">
+        <div class="form-row manager-only">
 
             <select id="paymentMember">
                 <option value="">Select Member</option>
             </select>
 
-            <input type="number"
-                   id="paymentAmount"
-                   placeholder="Amount">
+            <input
+                type="number"
+                id="paymentAmount"
+                placeholder="Amount"
+            >
 
-            <button onclick="addPayment()">Add Payment</button>
+            <button onclick="addPayment()">
+                Add Payment
+            </button>
 
         </div>
 
@@ -146,7 +230,8 @@
 
     </section>
 
-    <!-- Monthly Summary -->
+
+    <!-- SUMMARY -->
     <section class="section">
 
         <h2>📊 Monthly Summary</h2>
@@ -156,6 +241,7 @@
             <table>
 
                 <thead>
+
                     <tr>
                         <th>Member</th>
                         <th>Meal</th>
@@ -163,6 +249,7 @@
                         <th>Paid</th>
                         <th>Balance</th>
                     </tr>
+
                 </thead>
 
                 <tbody id="summaryTable"></tbody>
@@ -173,7 +260,12 @@
 
     </section>
 
-    <button class="danger" onclick="clearAllData()">
+
+    <!-- CLEAR -->
+    <button
+        class="danger manager-only"
+        onclick="clearAllData()"
+    >
         Clear All Data
     </button>
 

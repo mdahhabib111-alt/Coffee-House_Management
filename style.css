@@ -80,6 +80,22 @@ main {
     margin-top: 0;
 }
 
+.manager-section {
+    border-left: 5px solid #2563eb;
+}
+
+.manager-info {
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #f3f4f6;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.logged-in {
+    background: #dcfce7;
+}
+
 .form-row {
     display: flex;
     gap: 10px;
@@ -176,4 +192,5 @@ th {
     table {
         font-size: 13px;
     }
+
 }
