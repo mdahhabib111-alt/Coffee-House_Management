@@ -538,3 +538,22 @@ function updateAll() {
 // ==========================
 
 updateAll();
+// ==========================
+// SERVICE WORKER
+// ==========================
+
+if ("serviceWorker" in navigator) {
+
+    window.addEventListener("load", () => {
+
+        navigator.serviceWorker.register("./sw.js")
+            .then(() => {
+                console.log("App is ready!");
+            })
+            .catch(error => {
+                console.log("Service Worker Error:", error);
+            });
+
+    });
+
+}
