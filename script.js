@@ -86,16 +86,14 @@ function saveData() {
 
 
 // ==========================
-// MANAGER
+// MANAGER SECTION
 // ==========================
 
 function updateManagerSection() {
 
-    let month =
-        getSelectedMonth();
+    let month = getSelectedMonth();
 
-    let manager =
-        managers[month];
+    let manager = managers[month];
 
     let info =
         document.getElementById("managerInfo");
@@ -113,7 +111,7 @@ function updateManagerSection() {
             "⚠️ এই মাসে এখনো কোনো Manager সেট করা হয়নি।";
 
         info.className =
-            "manager-info";
+            "manager-info warning";
 
         controls.style.display =
             "block";
@@ -121,41 +119,41 @@ function updateManagerSection() {
         login.style.display =
             "none";
 
-    } else {
+    }
 
-        if (managerLoggedIn) {
+    else if (managerLoggedIn) {
 
-            info.innerHTML =
-                "👑 Manager: " +
-                manager.name +
-                " &nbsp; ✅ Logged in";
+        info.innerHTML =
+            "👑 Manager: " +
+            manager.name +
+            " &nbsp; ✅ Logged in";
 
-            info.className =
-                "manager-info logged-in";
+        info.className =
+            "manager-info logged-in";
 
-            controls.style.display =
-                "none";
+        controls.style.display =
+            "none";
 
-            login.style.display =
-                "none";
+        login.style.display =
+            "none";
 
-        } else {
+    }
 
-            info.innerHTML =
-                "👑 Manager: " +
-                manager.name +
-                " &nbsp; 🔒 Login required";
+    else {
 
-            info.className =
-                "manager-info";
+        info.innerHTML =
+            "👑 Manager: " +
+            manager.name +
+            " &nbsp; 🔒 Login required";
 
-            controls.style.display =
-                "none";
+        info.className =
+            "manager-info";
 
-            login.style.display =
-                "block";
+        controls.style.display =
+            "none";
 
-        }
+        login.style.display =
+            "block";
 
     }
 
@@ -176,7 +174,7 @@ function updateManagerDropdown() {
         document.getElementById("managerSelect");
 
     select.innerHTML =
-        '<option value="">Select Manager</option>';
+        '<option value="">Select Existing Member</option>';
 
 
     members.forEach(member => {
@@ -206,16 +204,44 @@ function setManager() {
     let month =
         getSelectedMonth();
 
-    let name =
-        document.getElementById("managerSelect").value;
+    if (managers[month]) {
+
+        alert(
+            "এই মাসে Manager already set করা আছে।"
+        );
+
+        return;
+
+    }
+
+
+    let existingName =
+        document.getElementById(
+            "managerSelect"
+        ).value;
+
+    let newName =
+        document.getElementById(
+            "newManagerName"
+        ).value.trim();
 
     let pin =
-        document.getElementById("managerPin").value;
+        document.getElementById(
+            "managerPin"
+        ).value.trim();
+
+
+    let name =
+        newName !== ""
+            ? newName
+            : existingName;
 
 
     if (name === "") {
 
-        alert("Select a Manager");
+        alert(
+            "Existing Member select কর অথবা নতুন Manager name লিখ।"
+        );
 
         return;
 
@@ -224,20 +250,34 @@ function setManager() {
 
     if (pin.length < 4) {
 
-        alert("Manager PIN must be at least 4 digits");
+        alert(
+            "Manager PIN must be at least 4 digits."
+        );
 
         return;
 
     }
 
 
-    if (managers[month]) {
+    // যদি নতুন নাম হয় তাহলে Member হিসেবে add হবে
 
-        alert(
-            "এই মাসে Manager already set করা আছে।"
+    let memberExists =
+        members.some(
+            member =>
+                member.name.toLowerCase() ===
+                name.toLowerCase()
         );
 
-        return;
+
+    if (!memberExists) {
+
+        members.push({
+
+            id: Date.now(),
+
+            name: name
+
+        });
 
     }
 
@@ -255,6 +295,17 @@ function setManager() {
         "managerPin"
     ).value = "";
 
+    document.getElementById(
+        "newManagerName"
+    ).value = "";
+
+    document.getElementById(
+        "managerSelect"
+    ).value = "";
+
+
+    managerLoggedIn = true;
+
 
     saveData();
 
@@ -262,8 +313,9 @@ function setManager() {
 
 
     alert(
+        "👑 " +
         name +
-        " is now the Manager for " +
+        " is now Manager for " +
         month
     );
 
@@ -283,12 +335,16 @@ function managerLogin() {
         managers[month];
 
     let pin =
-        document.getElementById("loginPin").value;
+        document.getElementById(
+            "loginPin"
+        ).value.trim();
 
 
     if (!manager) {
 
-        alert("No Manager selected");
+        alert(
+            "এই মাসে কোনো Manager সেট করা নেই।"
+        );
 
         return;
 
@@ -299,6 +355,7 @@ function managerLogin() {
 
         managerLoggedIn = true;
 
+
         document.getElementById(
             "loginPin"
         ).value = "";
@@ -306,11 +363,14 @@ function managerLogin() {
 
         updateAll();
 
+
         alert(
             "Manager Login Successful ✅"
         );
 
-    } else {
+    }
+
+    else {
 
         alert(
             "Wrong Manager PIN ❌"
@@ -339,7 +399,9 @@ function updateControlAccess() {
 
             element.style.display = "";
 
-        } else {
+        }
+
+        else {
 
             element.style.display = "none";
 
@@ -377,7 +439,26 @@ function addMember() {
     if (name === "") {
 
         alert(
-            "Enter member name"
+            "Enter member name."
+        );
+
+        return;
+
+    }
+
+
+    let exists =
+        members.some(
+            member =>
+                member.name.toLowerCase() ===
+                name.toLowerCase()
+        );
+
+
+    if (exists) {
+
+        alert(
+            "This member already exists."
         );
 
         return;
@@ -405,6 +486,10 @@ function addMember() {
 
 }
 
+
+// ==========================
+// DELETE MEMBER
+// ==========================
 
 function deleteMember(id) {
 
@@ -479,7 +564,7 @@ function addMeal() {
     ) {
 
         alert(
-            "Select date and member"
+            "Select date and member."
         );
 
         return;
@@ -557,7 +642,7 @@ function addExpense() {
     ) {
 
         alert(
-            "Fill all expense information"
+            "Fill all expense information."
         );
 
         return;
@@ -583,7 +668,6 @@ function addExpense() {
     document.getElementById(
         "expenseDescription"
     ).value = "";
-
 
     document.getElementById(
         "expenseAmount"
@@ -633,7 +717,7 @@ function addPayment() {
     ) {
 
         alert(
-            "Select member and enter amount"
+            "Select member and enter amount."
         );
 
         return;
@@ -752,7 +836,9 @@ function updateMembers() {
 
             `;
 
-        } else {
+        }
+
+        else {
 
             li.textContent =
                 member.name;
@@ -1051,7 +1137,6 @@ function updateSummary() {
         document.getElementById(
             "summaryTable"
         );
-
 
     table.innerHTML = "";
 

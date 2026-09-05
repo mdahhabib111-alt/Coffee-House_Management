@@ -33,31 +33,50 @@
 
         <h2>👑 Monthly Manager</h2>
 
-        <div id="managerInfo"></div>
+        <div id="managerInfo" class="manager-info">
+            Loading Manager...
+        </div>
 
+        <!-- SET MANAGER -->
         <div id="managerControls">
+
+            <h3>Set Manager for this Month</h3>
 
             <div class="form-row">
 
                 <select id="managerSelect">
-                    <option value="">Select Manager</option>
+                    <option value="">Select Existing Member</option>
                 </select>
+
+                <input
+                    type="text"
+                    id="newManagerName"
+                    placeholder="Or enter new Manager name"
+                >
 
                 <input
                     type="password"
                     id="managerPin"
-                    placeholder="Manager PIN"
+                    placeholder="Manager PIN (4+ digits)"
                 >
 
                 <button onclick="setManager()">
-                    Set Manager
+                    👑 Set Manager
                 </button>
 
             </div>
 
+            <p class="small-text">
+                প্রথমবার হলে নতুন নাম দিলেও Member হিসেবে automatically add হবে।
+            </p>
+
         </div>
 
+
+        <!-- MANAGER LOGIN -->
         <div id="managerLogin" style="display:none;">
+
+            <h3>🔐 Manager Login</h3>
 
             <div class="form-row">
 
@@ -68,7 +87,7 @@
                 >
 
                 <button onclick="managerLogin()">
-                    Manager Login
+                    🔓 Login
                 </button>
 
             </div>
@@ -142,18 +161,14 @@
             </select>
 
             <select id="mealType">
-
                 <option value="Breakfast">Breakfast</option>
                 <option value="Lunch">Lunch</option>
                 <option value="Dinner">Dinner</option>
-
             </select>
 
             <select id="mealAmount">
-
                 <option value="1">1 Meal</option>
                 <option value="0.5">0.5 Meal</option>
-
             </select>
 
             <button onclick="addMeal()">
@@ -266,7 +281,7 @@
         class="danger manager-only"
         onclick="clearAllData()"
     >
-        Clear All Data
+        🗑️ Clear All Data
     </button>
 
 </main>
