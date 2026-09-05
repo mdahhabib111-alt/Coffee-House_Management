@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mess Management</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header>
+    <h1>🍽️ Mess Management</h1>
+    <p>Monthly Meal & Money হিসাব</p>
+</header>
+
+<main>
+
+    <!-- Month -->
+    <section class="month-box">
+        <label>Select Month:</label>
+        <input type="month" id="selectedMonth" onchange="updateAll()">
+    </section>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+
+        <div class="card">
+            <h3>Total Members</h3>
+            <p id="totalMembers">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Meal</h3>
+            <p id="totalMeal">0</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Expense</h3>
+            <p id="totalExpense">৳0</p>
+        </div>
+
+        <div class="card">
+            <h3>Meal Rate</h3>
+            <p id="mealRate">৳0</p>
+        </div>
+
+    </section>
+
+    <!-- Members -->
+    <section class="section">
+
+        <h2>👥 Members</h2>
+
+        <div class="form-row">
+            <input type="text" id="memberName" placeholder="Member name">
+            <button onclick="addMember()">Add Member</button>
+        </div>
+
+        <ul id="memberList"></ul>
+
+    </section>
+
+    <!-- Daily Meal -->
+    <section class="section">
+
+        <h2>🍚 Daily Meal</h2>
+
+        <div class="form-row">
+
+            <input type="date" id="mealDate">
+
+            <select id="mealMember">
+                <option value="">Select Member</option>
+            </select>
+
+            <select id="mealType">
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+            </select>
+
+            <select id="mealAmount">
+                <option value="1">1 Meal</option>
+                <option value="0.5">0.5 Meal</option>
+            </select>
+
+            <button onclick="addMeal()">Add Meal</button>
+
+        </div>
+
+        <div id="mealList"></div>
+
+    </section>
+
+    <!-- Expense -->
+    <section class="section">
+
+        <h2>🛒 Bazar / Expense</h2>
+
+        <div class="form-row">
+
+            <input type="date" id="expenseDate">
+
+            <input type="text"
+                   id="expenseDescription"
+                   placeholder="What did you buy?">
+
+            <input type="number"
+                   id="expenseAmount"
+                   placeholder="Amount">
+
+            <select id="expensePayer">
+                <option value="">Who paid?</option>
+            </select>
+
+            <button onclick="addExpense()">Add Expense</button>
+
+        </div>
+
+        <div id="expenseList"></div>
+
+    </section>
+
+    <!-- Payment -->
+    <section class="section">
+
+        <h2>💰 Member Payment</h2>
+
+        <div class="form-row">
+
+            <select id="paymentMember">
+                <option value="">Select Member</option>
+            </select>
+
+            <input type="number"
+                   id="paymentAmount"
+                   placeholder="Amount">
+
+            <button onclick="addPayment()">Add Payment</button>
+
+        </div>
+
+        <div id="paymentList"></div>
+
+    </section>
+
+    <!-- Monthly Summary -->
+    <section class="section">
+
+        <h2>📊 Monthly Summary</h2>
+
+        <div class="table-container">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>Member</th>
+                        <th>Meal</th>
+                        <th>Meal Cost</th>
+                        <th>Paid</th>
+                        <th>Balance</th>
+                    </tr>
+                </thead>
+
+                <tbody id="summaryTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </section>
+
+    <button class="danger" onclick="clearAllData()">
+        Clear All Data
+    </button>
+
+</main>
+
+<script src="script.js"></script>
+
+</body>
+</html>
